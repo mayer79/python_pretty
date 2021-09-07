@@ -8,7 +8,7 @@ def pretty(x, nint=None, p=None, base=10):
         x (np.array): One-dimensional numpy array. Used to derive breaks.
         nint (int, optional): Approximate number of intervals. Defaults to None.
         p (list, optional): List of basic round numbers between 1 and "base",
-            e.g. p = 10/7 will lead to multiples of 1/7, 10/7, 100/7 etc, 
+            e.g. p = [10/7] will lead to multiples of 1/7, 10/7, 100/7 etc, 
             whatever fits best to "x" and "nint". Defaults to None.
         base (int, optional): Radix of the number system. Defaults to 10.
 
@@ -21,6 +21,7 @@ def pretty(x, nint=None, p=None, base=10):
         pretty(x)                  # array([  0,  10,  20,  30,  40,  50,  60,  70,  80,  90, 100])
         pretty(x, nint=4)          # array([  0,  40,  80, 120])
         pretty(x, base=5, nint=4)  # array([  0,  25,  50,  75, 100])
+        pretty(x, p=[10/7])        # array([  0., 14.28571429, 28.57142857, etc.]
 
     Reference:
         W. J. Dixon and R. A. Kronmal (1965), "The choice of origin and scale for graphs", 
