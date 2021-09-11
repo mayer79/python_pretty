@@ -15,18 +15,19 @@ Note that the function is different from the R implementation.
 ```
 import numpy as np
 x = np.arange(1, 101)
-pretty(x)                  # array([  0,  10,  20,  30,  40,  50,  60,  70,  80,  90, 100])
-pretty(x, nint=4)          # array([  0,  40,  80, 120])
-pretty(x, base=5, nint=4)  # array([  0,  25,  50,  75, 100])
-pretty(x, p=[10/7])        # array([  0., 14.28571429, 28.57142857, etc.]
+pretty(x)                       # array([0., 20., 40., 60., 80., 100.])
+pretty(x, n=4)                  # array([0., 50., 100., 150.])
+pretty(x, base=5)               # array([0, 25, 50, 75, 100])
+pretty(x, p=[10/7, 20/7, 50/7]) # array([0., 28.57142857, 57.14285714, etc.]
 ```
 
 ## Arguments
 
-- x (np.array): One-dimensional numpy array. Used to derive breaks.
-- nint (int, optional): Approximate number of intervals. Defaults to None.
-- p (list, optional): List of basic round numbers between 1 and "base",
-            e.g. p = 10/7 will lead to multiples of 1/7, 10/7, 100/7 etc, 
-            whatever fits best to "x" and "nint". Defaults to None.
-- base (int, optional): Radix of the number system. Defaults to 10.
+- x (np.array): Numpy array of size >= 2. Used to derive breaks.
+- n (int, optional): Approximate number of intervals between breaks. Defaults to 5.
+- p (list, optional): List of basic rounding numbers in [1, base),
+    e.g. p = [10/7] will lead to multiples of 1/7, 10/7, 100/7 etc, 
+    whatever fits best to "x" and "n". Defaults to [1, 2, 5].
+- base (float, optional): Radix of the number system >= 2. Defaults to 10.0.
+- tol (float, optional): Numeric tolerance for close 0 breaks. Defaults to 1e-9.
         
