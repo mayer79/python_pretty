@@ -1,5 +1,5 @@
 import math
-
+import bisect
 
 def pretty(lo, up, n=5):
     """ Pretty bin boundaries.
@@ -15,32 +15,24 @@ def pretty(lo, up, n=5):
     ----------
     lo : float or int
         Lowest value to be covered.
-    hi : float or int
+    up : float or int
         Highest value to be covered.
     n : int, optional
         Approximate number of intervals.
 
     Returns
     -------
-    List of about n breaks covering the interval [lo, hi].
+    List of about n breaks covering the interval [lo, up].
 
     Examples
     --------
     pretty(-1, 101, n=5)
     [-20, 0, 20, 40, 60, 80, 100, 120]
-    
     """
     cell = (up - lo) / n
     base = 10 ** math.floor(math.log10(cell))
-    if cell <= base * 1.4:
-        k = 1
-    elif cell <= base * 2.8:
-        k = 2
-    elif cell <= base * 7:
-        k = 5
-    else:
-        k = 10
-    unit = k * base
+    k = bisect.bisect_left((1.4, 2.8, 7, 10), cell / base)  # ratio in [1, 10)
+    unit = base * ((1, 2, 5, 10)[k])
     ns = math.floor(lo / unit + 1e-10)
     nu = math.ceil(up / unit - 1e-10)
 
