@@ -6,7 +6,6 @@ def pretty(lo, up, n=5):
 
     Returns pretty bin bounderies of about size n that covers the range from 
     lo to up. Simplified version of R's pretty().
-
     See implementations here:
     https://stackoverflow.com/questions/43075617/python-function-equivalent-to-rs-pretty
     And the R original https://github.com/wch/r-source/blob/trunk/src/appl/pretty.c
@@ -23,7 +22,7 @@ def pretty(lo, up, n=5):
     Returns
     -------
     List of about n breaks covering the interval [lo, up].
-
+    
     Examples
     --------
     pretty(-1, 101, n=5)
@@ -31,9 +30,8 @@ def pretty(lo, up, n=5):
     """
     cell = (up - lo) / n
     base = 10 ** math.floor(math.log10(cell))
-    k = bisect.bisect_left((1.4, 2.8, 7, 10), cell / base)  # ratio in [1, 10)
+    k = bisect.bisect_left((1.4, 2.8, 7), cell / base)  # ratio in [1, 10)
     unit = base * ((1, 2, 5, 10)[k])
     ns = math.floor(lo / unit + 1e-10)
     nu = math.ceil(up / unit - 1e-10)
-
     return [unit * i for i in range(ns, nu + 1)]
