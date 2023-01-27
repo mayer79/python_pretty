@@ -1,10 +1,10 @@
 import math
-import bisect
+
 
 def pretty(lo, up, n=5):
-    """ Pretty bin boundaries.
+    """Pretty bin boundaries.
 
-    Returns pretty bin bounderies of about size n that covers the range from 
+    Returns pretty bin bounderies of about size n that covers the range from
     lo to up. Simplified version of R's pretty().
     See implementations here:
     https://stackoverflow.com/questions/43075617/python-function-equivalent-to-rs-pretty
@@ -22,7 +22,7 @@ def pretty(lo, up, n=5):
     Returns
     -------
     List of about n breaks covering the interval [lo, up].
-    
+
     Examples
     --------
     pretty(-1, 101, n=5)
@@ -30,8 +30,17 @@ def pretty(lo, up, n=5):
     """
     cell = (up - lo) / n
     base = 10 ** math.floor(math.log10(cell))
-    k = bisect.bisect_left((1.4, 2.8, 7), cell / base)  # ratio in [1, 10)
-    unit = base * ((1, 2, 5, 10)[k])
+    r = cell / base
+    if r <= 1.4:
+        c = 1
+    elif r <= 2.8:
+        c = 2
+    elif r <= 7:
+        c = 5
+    else:
+        c = 10
+    unit = c * base
     ns = math.floor(lo / unit + 1e-10)
     nu = math.ceil(up / unit - 1e-10)
+
     return [unit * i for i in range(ns, nu + 1)]
